@@ -288,10 +288,10 @@ public class GoalManager : MonoBehaviour
     {
         m_CoachingUIParent.transform.localScale = Vector3.zero;
 
-        TurnOnVideoPlayer();
-
-        if (m_VideoPlayerToggle != null)
-            m_VideoPlayerToggle.isOn = true;
+        // TurnOnVideoPlayer();
+        //
+        //  if (m_VideoPlayerToggle != null)
+        //      m_VideoPlayerToggle.isOn = true;
 
 
         if (m_FadeMaterial != null)
@@ -306,12 +306,12 @@ public class GoalManager : MonoBehaviour
         {
             m_LearnButton.SetActive(false);
         }
-
+        
         if (m_LearnModal != null)
         {
             m_LearnModal.transform.localScale = Vector3.zero;
         }
-
+        
         StartCoroutine(TurnOnPlanes());
     }
 

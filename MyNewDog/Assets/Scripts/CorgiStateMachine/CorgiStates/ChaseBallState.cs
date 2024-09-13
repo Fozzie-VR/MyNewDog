@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChaseBallState : IState
@@ -34,17 +32,15 @@ public class ChaseBallState : IState
 
     public void SetTargetBall(Transform ball)
     {
-        //_targetBall = ball;
         _chaseBallSMB.SetTargetBall(ball);
     }
-    
+
     private void OnBallInPickupRange(Transform ball)
     {
         BallInRangeEvent?.Invoke(ball);
     }
     public void EnterState()
     {
-        //set chase ball parameter to true
         _animator.SetBool(_isChasing, true);
     }
 

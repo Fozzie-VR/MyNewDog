@@ -66,7 +66,7 @@ public class ChaseBallSMB : StateMachineBehaviour
         Vector3 direction = _corgiTransform.forward;
         direction.y = 0f;
         float distance = Vector3.Distance(_corgiTransform.position, _targetBall.position);
-        if (distance > 0.5f)
+        if (distance > 0.3f)
         {
             _corgiTransform.Translate(direction * Time.deltaTime, Space.World);
         }

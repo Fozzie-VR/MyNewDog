@@ -22,9 +22,12 @@ public class PickupBallState : IState
     {
         _animator = animator;
         _pickupBallTriggerHash = Animator.StringToHash("pickupBall");
-        _animator.GetBehaviour<PickupBallSMB>().PickupBallExitEvent += OnPickupAnimationFinished;
+        PickupBallSMB pickupBallSMB = _animator.GetBehaviour<PickupBallSMB>();
+        pickupBallSMB.ChompBallEvent += OnChompBall;
+        pickupBallSMB.PickupBallExitEvent += OnPickupAnimationFinished;
         Transform root = _animator.transform.root;
         _socketInteractor = root.GetComponentInChildren<XRSocketInteractor>();
+        _socketInteractor.enabled = false;
     }
 
     public void SetTargetBall(Transform ball)
@@ -35,7 +38,7 @@ public class PickupBallState : IState
     public void EnterState()
     {
         _animator.SetTrigger(_pickupBallTriggerHash);
-        _socketInteractor.enabled = true;
+       
     }
 
     public void ExitState()
@@ -43,7 +46,13 @@ public class PickupBallState : IState
         StateExitedEvent?.Invoke(this);
     }
 
-    public void OnPickupAnimationFinished()
+    private void OnChompBall()
+    {
+        _socketInteractor.enabled = true;
+    }
+    
+
+    private void OnPickupAnimationFinished()
     {
         //make sure mouth socket is selecting ball
         var selectedInteractable = _socketInteractor.GetOldestInteractableSelected();
