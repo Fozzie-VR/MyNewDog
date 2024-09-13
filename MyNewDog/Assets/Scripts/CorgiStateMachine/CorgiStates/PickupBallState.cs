@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -58,7 +59,7 @@ public class PickupBallState : IState
             IXRSelectInteractable selectInteractable = _targetBall.GetComponent<IXRSelectInteractable>();
             interactionManager.SelectEnter(selectInteractor, selectInteractable);
             BallChompedEvent?.Invoke(_targetBall);
-            //xitState();
+            
         }
     }
 }
