@@ -15,8 +15,10 @@ public class SitState : IState
     {
         _animator = corgiAnimator;
         var sitSMB = _animator.GetBehaviour<SitSMB>();
-        sitSMB.SitEnteredEvent += OnSitAnimationEntered;
         sitSMB.SitExitedEvent += OnSitSMBExited;
+        
+        var startSittingSMB = _animator.GetBehaviour<StartSittingSMB>();
+        startSittingSMB.SitEnteredEvent += OnSitAnimationEntered;
 
     }
     public void EnterState()
