@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ReturnToPlayerSMB : StateMachineBehaviour
 {
+    public event System.Action ReturnToPlayerEnteredEvent;
     public event System.Action ReturnToPlayerExitedEvent;
     public event System.Action ReachedPlayerEvent;
     Transform _playerTransform;
@@ -13,6 +14,8 @@ public class ReturnToPlayerSMB : StateMachineBehaviour
     {
         _corgiTransform = animator.transform;
         _playerTransform = Camera.main.transform;
+
+        ReturnToPlayerEnteredEvent?.Invoke();
     }
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SitState : IState
 {
+    public event Action<IState> StateEnteredEvent;
     public event Action<IState> StateExitedEvent;
     private CorgiBehaviour _corgiBehaviour;
     private Animator _animator;
@@ -13,12 +14,19 @@ public class SitState : IState
     public SitState(Animator corgiAnimator)
     {
         _animator = corgiAnimator;
-        _animator.GetBehaviour<SitSMB>().SitExitedEvent += OnSitSMBExited;
+        var sitSMB = _animator.GetBehaviour<SitSMB>();
+        sitSMB.SitEnteredEvent += OnSitAnimationEntered;
+        sitSMB.SitExitedEvent += OnSitSMBExited;
 
     }
     public void EnterState()
     {
        _animator.SetBool(_sitBoolHash, true);
+    }
+
+    private void OnSitAnimationEntered()
+    {
+        StateEnteredEvent?.Invoke(this);
     }
 
     public void ExitState()

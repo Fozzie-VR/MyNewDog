@@ -9,6 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class PickupBallState : IState
 {
+    public event Action<IState> StateEnteredEvent;
     public event Action<IState> StateExitedEvent;
     public event Action<Transform> BallChompedEvent;
     CorgiBehaviour _corgiBehavior;
@@ -22,6 +23,9 @@ public class PickupBallState : IState
     {
         _animator = animator;
         _pickupBallTriggerHash = Animator.StringToHash("pickupBall");
+        LowerHeadSMB lowerHeadSMB = _animator.GetBehaviour<LowerHeadSMB>();
+        lowerHeadSMB.LowerHeadEnteredEvent += OnPickupAnimationEntered;
+        
         PickupBallSMB pickupBallSMB = _animator.GetBehaviour<PickupBallSMB>();
         pickupBallSMB.ChompBallEvent += OnChompBall;
         pickupBallSMB.PickupBallExitEvent += OnPickupAnimationFinished;
@@ -39,6 +43,11 @@ public class PickupBallState : IState
     {
         _animator.SetTrigger(_pickupBallTriggerHash);
        
+    }
+
+    private void OnPickupAnimationEntered()
+    {
+        StateEnteredEvent?.Invoke(this);
     }
 
     public void ExitState()

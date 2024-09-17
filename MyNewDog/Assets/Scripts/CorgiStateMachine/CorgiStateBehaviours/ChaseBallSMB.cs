@@ -8,6 +8,7 @@ public class ChaseBallSMB : StateMachineBehaviour
 
     private Transform _targetBall;
     private Transform _corgiTransform;
+    public event Action ChaseBallEnteredEvent;
     public event Action SMBExitedEvent;
     public event Action<Transform> InPickupRangeEvent;
     public event Action BallLostEvent;
@@ -22,6 +23,7 @@ public class ChaseBallSMB : StateMachineBehaviour
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         _corgiTransform = animator.transform;
+        ChaseBallEnteredEvent?.Invoke();
         
     }
 

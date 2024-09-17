@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class StandState : IState
 {
+    public event Action<IState> StateEnteredEvent;
     public event Action<IState> StateExitedEvent;
     private Animator _animator;
     private int _isStandingHash;
@@ -18,19 +19,7 @@ public class StandState : IState
     }
     public void EnterState()
     {
-        foreach (var parameter in _animator.parameters)              
-        {
-            if (parameter.type == AnimatorControllerParameterType.Bool)
-            {
-                _animator.SetBool(parameter.nameHash, false);
-                
-            }
-        
-            if (parameter.type == AnimatorControllerParameterType.Trigger)
-            {
-                _animator.ResetTrigger(parameter.nameHash);
-            }
-        }
+        StateEnteredEvent?.Invoke(this);
     }
 
     public void ExitState()

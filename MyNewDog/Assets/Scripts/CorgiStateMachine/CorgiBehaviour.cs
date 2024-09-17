@@ -47,24 +47,30 @@ public class CorgiBehaviour : MonoBehaviour
     private void InitializeStates()
     {
         _standState = new StandState(_animator);
+        _standState.StateEnteredEvent += OnStateEntered;
         _standState.StateExitedEvent += OnCurrentStateExited;
         
         _wagTailState = new WagTailState(_animator);
+        _wagTailState.StateEnteredEvent += OnStateEntered;
         _wagTailState.StateExitedEvent += OnCurrentStateExited;
         
         _returnToPlayerState = new ReturnToPlayerState(_animator);
+        _returnToPlayerState.StateEnteredEvent += OnStateEntered;
         _returnToPlayerState.StateExitedEvent += OnCurrentStateExited;
         _returnToPlayerState.ReturnedToPlayerEvent += OnReturnedToPlayer;
           
         _sitState = new SitState(_animator);
         _sitState.StateExitedEvent += OnCurrentStateExited;
+        _sitState.StateEnteredEvent += OnStateEntered;
         
         _corgiChaseBallState = new ChaseBallState(_animator);
+        _corgiChaseBallState.StateEnteredEvent += OnStateEntered;
         _corgiChaseBallState.StateExitedEvent += OnCurrentStateExited;
         _corgiChaseBallState.BallInRangeEvent += PickupBall;
         _corgiChaseBallState.BallLostEvent += OnBallLost;
         
         _pickupBallState = new PickupBallState(_animator);
+        _pickupBallState.StateEnteredEvent += OnStateEntered;
         _pickupBallState.BallChompedEvent += OnBallChomped;
         _pickupBallState.StateExitedEvent += OnCurrentStateExited;
         
@@ -123,6 +129,11 @@ public class CorgiBehaviour : MonoBehaviour
         }
     }
 
+    private void OnStateEntered(IState state)
+    {
+        _currentState = state;
+    }
+
     private void OnCurrentStateExited(IState state)
     {
         if (state != _currentState)
@@ -136,7 +147,6 @@ public class CorgiBehaviour : MonoBehaviour
     private void EnterNextState()
     {
         _nextState.EnterState();
-        _currentState = _nextState;
     }
 
     
